@@ -1,32 +1,54 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using MovieStore.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieStore.Models.DTO;
+using MovieStore.Repositories.Abstract;
 
 namespace MovieStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMovieService _movieService;
+        private readonly IUserAuthenticationService _authService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMovieService movieService, IUserAuthenticationService authService)
         {
-            _logger = logger;
+            _movieService = movieService;
+            _authService = authService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string term = "", int currentPage = 1)
+        {
+            var movieListVm = _movieService.List(term, paging: true, currentPage: currentPage);
+            return View(movieListVm);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _authService.LoginAsync(model);
+            if (result.StatusCode == 1)
+            {
+                return RedirectToAction("Index");
+            }
+
+            TempData["msg"] = result.Message;
+            return View(model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Logout()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            await _authService.LogoutAsync();
+            return RedirectToAction("Index");
         }
     }
 }
