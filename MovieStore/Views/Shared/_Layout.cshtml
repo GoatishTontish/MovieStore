@@ -1,7 +1,4 @@
-﻿@{
-    string username = User.Identity.Name;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,26 +22,11 @@
         <ul class="nav-link">
             <li><a class="active" href="/Home/Index">Home</a></li>
             <li><a href="/Home/About">About</a></li>
-            @if (!string.IsNullOrEmpty(username))
-            {
-                <li>
-                    <a href="#">Admin <i class="fa fa-caret-down"></i></a>
-
-                    <ul class="dropdown-nav-link">
-                        <li><a href="/Genre/Add">Genre</a></li>
-                        <li><a href="/Movie/Add">Movie</a></li>
-                        <li><a href="/UserAuthentication/Logout">Logout</a></li>
-                    </ul>
-                </li>
-            }
-           
-            @if(string.IsNullOrEmpty(username)){
-                <li><a href="/UserAuthentication/Login">Login</a></li>
-            }
+            
         </ul>
     </nav>
     <div class="container">
-       @RenderBody()
+        @RenderBody()
     </div>
     <footer>
         &#169; @DateTime.UtcNow.Year Ravindra Devrani
