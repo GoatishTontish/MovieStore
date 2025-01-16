@@ -7,16 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\UserAuthentication\**" />
-    <Content Remove="Views\UserAuthentication\**" />
-    <EmbeddedResource Remove="Views\UserAuthentication\**" />
-    <None Remove="Views\UserAuthentication\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\js\" />
+    <Folder Include="Data\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>

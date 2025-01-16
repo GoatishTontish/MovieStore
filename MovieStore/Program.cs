@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MovieStore.Models.Domain;
+using MovieStore.Repositories.Abstract;
+using MovieStore.Repositories.Implementation;
 //using MovieStore.Models.Domain;
 //using MovieStore.Repositories.Abstract;
 //using MovieStore.Repositories.Implementation;
@@ -8,18 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(); 
-//builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 
 //builder.Services.AddScoped<IGenreService, GenreService>();
 //builder.Services.AddScoped<IFileService, FileService>();
 //builder.Services.AddScoped<IMovieService, MovieService>();
 
-//builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MovieStoreDB;Trusted_Connection=True;"));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=MovieStoreDB;Trusted_Connection=True;"));
 
-// For Identity  
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-//    .AddEntityFrameworkStores<DatabaseContext>()
-//    .AddDefaultTokenProviders();
+//For Identity  
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<DatabaseContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
