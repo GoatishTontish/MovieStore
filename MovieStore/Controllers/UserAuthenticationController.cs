@@ -49,5 +49,12 @@ namespace MovieStore.Controllers
                 return RedirectToAction(nameof(Login));
             }
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await authService.LogoutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
     }
 }
